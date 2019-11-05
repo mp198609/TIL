@@ -1,0 +1,21 @@
+https://ryota-trade.com/?p=203
+の
+
+import requests
+response = requests.get("https://api.bitflyer.jp/v1/ticker/")
+print(response.json())
+
+を社内LANでそのまま実行したらダメで、
+
+https://teratail.com/questions/92549
+を参考にして以下にしたらできた。
+
+import urllib.request
+
+PROXIES = {
+    'https' : 'https://proxy.inside.ulvac.com:10080' # プロキシのアドレスを指定
+}
+proxy_handler = urllib.request.ProxyHandler(PROXIES)
+opener = urllib.request.build_opener(proxy_handler)
+response = opener.open("https://api.bitflyer.jp/v1/ticker/").read()
+print(response)
